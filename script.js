@@ -39,6 +39,7 @@ total = 0;
 row = 1;
 word = "";
 winner = false;
+loser = false;
 
 answers = [
 ];
@@ -89,6 +90,10 @@ for (i = 0; i < saved.length; i++) {
                 num = 0;
                 word = "";
                 row++;
+}
+if (row >6){
+    loser = true;
+    on();
 }
 }
 
@@ -170,6 +175,11 @@ document.addEventListener("keypress", function(event) {
                 }
                 
             }
+
+            if (row > 6){
+                loser = true;
+                on();
+            }
         }
     }
 
@@ -215,6 +225,9 @@ document.getElementById("borble").onclick = function() {
     if (winner == true) {
         on();
     }
+    if (loser == true) {
+        on();
+    }
 }
 
 document.getElementById("button").onclick = function() {
@@ -235,7 +248,7 @@ document.getElementById("button").onclick = function() {
         // get row and subtract it by 1
         myrow = row - 1; 
 
-        temp_text = "https://borble.netlify.app/ "+date + myrow +"/6";
+        temp_text = "https://borble.netlify.app/ "+date+ " " + myrow +"/6";
         for (i = 0; i < answers.length; i++) {
             temp_text += "\n";
             for (j = 0; j < answers[i].length; j++) {
@@ -251,6 +264,40 @@ document.getElementById("button").onclick = function() {
         }
         // copy temp_text to clipboard
         navigator.clipboard.writeText(temp_text);
+    }
+    if (loser == true) {
+            // date string formatted as DD-MM-YYYY
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+            if (dd<10) {
+                dd = '0'+dd;
+            }
+            if (mm<10){
+                mm = '0'+mm;
+            }
+            date = dd+ "-"+mm+"-"+yyyy;
+            
+            // get row and subtract it by 1
+            myrow = row - 1; 
+    
+            temp_text = "https://borble.netlify.app/ "+date + " X/6";
+            for (i = 0; i < answers.length; i++) {
+                temp_text += "\n";
+                for (j = 0; j < answers[i].length; j++) {
+                    if ( answers[i][j] === "c") {
+                        temp_text += "🟩";
+                    } else if (answers[i][j] === "w"){
+                        temp_text += "⬛";
+                    } else {
+                        temp_text += "🟨";
+                    }
+                }
+                
+            }
+            // copy temp_text to clipboard
+            navigator.clipboard.writeText(temp_text);
     }
 }
   
