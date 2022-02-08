@@ -3,12 +3,13 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>replit</title>
+    <title>borble</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" type="image/x-icon" href="borble_icon.png">
   </head>
   <body>
-    <h1 class="title">BORBLE</h1>
-    <div id="box_container">
+    <h1 class="title noselect" id="borble">BORBLE</h1>
+    <div id="box_container" class="noselect">
       <div class="row" id="row-1">
         <div class="box" id="box_1">
           <div class="box_content">
@@ -173,6 +174,13 @@
       </div>
     
     </div>
+
+    <div id="overlay">
+      <div id="button" class="noselect">Copy Results</div>
+    </div>
+
+    <!-- button with id clear and inner html of clear -->
+    <button id="clear">Clear</button>
 
     <script src="words.js"></script>
     <script src="script.js"></script>

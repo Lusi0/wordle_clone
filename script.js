@@ -1,11 +1,21 @@
-// get a random word from const words
-function getRandomWord() {
-    return words[Math.floor(Math.random() * words.length)];
-    }
 
-const myrandomword = getRandomWord();
+function getTodaysWord() {
+    //get the day month and year and put them into a string formatted as YYYY-MM-DD
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    
+    today =   mm + yyyy + dd;
+    // convert the string to a number
+    today = parseInt(today);
+    // use today as a seed to get a random word from the array
+    return words[today % words.length];
+}
 
-console.log(myrandomword);
+const myrandomword = getTodaysWord();
+
+
 
 const boxes = document.querySelectorAll(".box");
 
@@ -22,13 +32,66 @@ function clearBoxes() {
 
 clearBoxes();
 
+
+
 num = 0;
 total = 0;
 row = 1;
 word = "";
 winner = false;
 
+answers = [
+];
 
+saved = document.cookie.split("; "); 
+
+for (i = 0; i < saved.length; i++) {
+    saved[i] = saved[i].split("=")[1];
+}
+console.log(saved)
+if (saved[0] != undefined) {
+for (i = 0; i < saved.length; i++) {
+    for (j = 0; j < saved[i].length; j++) {
+        // select the box that corresponds to the number
+        selected = boxes[total].querySelector(".box_content");
+        // put the letter in the box
+        selected.innerHTML = saved[i][j];
+        // increment the total
+        num++;
+        total++;
+        word += saved[i][j];
+    }
+    l = 0;
+                tempword = myrandomword.split("");
+                tempanswers = [];
+                for (k = total - num; k < total; k++) {
+                    // check to see if the current box matches any letters in the word
+                    if (word[l] == myrandomword[l]) {
+                        boxes[k].classList.add("correct");
+                        // append "g" to tempanwers
+                        tempanswers.push("c");
+
+                        // remove one object that is equal to word[l] from tempword
+
+                        tempword.splice(tempword.indexOf(word[l]), 1);
+                    } else if (myrandomword.split("").includes(word[l]) && tempword.includes(word[l])) {
+                        boxes[k].classList.add("goodtried");
+                        tempanswers.push("y");
+                        tempword.splice(tempword.indexOf(word[l]), 1);
+                    }
+                    else {
+                    tempanswers.push("w");
+                    boxes[k].classList.add("tried");
+                    }
+                    l++
+
+                }
+                answers.push(tempanswers);
+                num = 0;
+                word = "";
+                row++;
+}
+}
 
 // when key is pressed if it is a letter put it into the box that corresponds to num
 document.addEventListener("keypress", function(event) {
@@ -52,32 +115,52 @@ document.addEventListener("keypress", function(event) {
         if (event.key == "Enter") {
             if (word === myrandomword) {
                 winner = true;
+                on();
             }
 
-            if (num == 5 && words.includes(word)) {
+            if (num == 5 && (words.includes(word) || weird.includes(word))) {
                 // reset the number
                 
                 // increment the row
 
                 // for boxes total - total + 5 add id "tried"
+                
+                // make the cookie expire at 12:00am the next day
+                day = new Date();
+                day.setDate(day.getDate() + 1);
+                // set the time to 12:00am
+                day.setHours(0,0,0,0);
+                my_cookie = "row" + row + "=" + word + "; expires="+ day;
+                console.log(my_cookie);
+                document.cookie = my_cookie;
+
+
                 j = 0;
                 tempword = myrandomword.split("");
+                tempanswers = [];
                 for (i = total - num; i < total; i++) {
                     // check to see if the current box matches any letters in the word
                     if (word[j] == myrandomword[j]) {
                         boxes[i].classList.add("correct");
+                        // append "g" to tempanwers
+                        tempanswers.push("c");
+
                         // remove one object that is equal to word[j] from tempword
+
                         tempword.splice(tempword.indexOf(word[j]), 1);
                     } else if (myrandomword.split("").includes(word[j]) && tempword.includes(word[j])) {
                         boxes[i].classList.add("goodtried");
+                        tempanswers.push("y");
                         tempword.splice(tempword.indexOf(word[j]), 1);
                     }
                     else {
+                    tempanswers.push("w");
                     boxes[i].classList.add("tried");
                     }
                     j++
-                }
 
+                }
+                answers.push(tempanswers);
                 num = 0;
                 word = "";
                 row++;
@@ -125,3 +208,66 @@ document.addEventListener("keydown", function(event) {
         }
     }
 });
+
+
+function on() {
+    document.getElementById("overlay").style.display = "block";
+}
+
+document.getElementById("borble").onclick = function() {
+    if (winner == true) {
+        on();
+    }
+}
+
+document.getElementById("button").onclick = function() {
+    if (winner == true) {
+        // date string formatted as DD-MM-YYYY
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if (dd<10) {
+            dd = '0'+dd;
+        }
+        if (mm<10){
+            mm = '0'+mm;
+        }
+        date = dd+ "-"+mm+"-"+yyyy;
+        
+        // get row and subtract it by 1
+        myrow = row - 1; 
+
+        temp_text = "https://borble.netlify.app/ "+date + myrow +"/6";
+        for (i = 0; i < answers.length; i++) {
+            temp_text += "\n";
+            for (j = 0; j < answers[i].length; j++) {
+                if ( answers[i][j] === "c") {
+                    temp_text += "🟩";
+                } else if (answers[i][j] === "w"){
+                    temp_text += "⬛";
+                } else {
+                    temp_text += "🟨";
+                }
+            }
+            
+        }
+        // copy temp_text to clipboard
+        navigator.clipboard.writeText(temp_text);
+    }
+}
+  
+// when div with id overlay is clicked
+document.getElementById("overlay").onclick = function() {
+    
+    // hide the overlay
+    document.getElementById("overlay").style.display = "none";
+    // clear the boxes
+
+}
+
+// when button with id "clear" is clicked clear cookies
+document.getElementById("clear").onclick = function() {
+    document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+    console.log(document.cookie)
+}
