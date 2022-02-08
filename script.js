@@ -48,7 +48,6 @@ saved = document.cookie.split("; ");
 for (i = 0; i < saved.length; i++) {
     saved[i] = saved[i].split("=")[1];
 }
-console.log(saved)
 if (saved[0] != undefined) {
 for (i = 0; i < saved.length; i++) {
     for (j = 0; j < saved[i].length; j++) {
@@ -131,7 +130,6 @@ document.addEventListener("keypress", function(event) {
                 // set the time to 12:00am
                 day.setHours(0,0,0,0);
                 my_cookie = "row" + row + "=" + word + "; expires="+ day;
-                console.log(my_cookie);
                 document.cookie = my_cookie;
 
 
@@ -174,7 +172,7 @@ document.addEventListener("keypress", function(event) {
             }
         }
     }
-    console.log(total,num);
+
 
 });
 
@@ -200,7 +198,6 @@ document.addEventListener("keydown", function(event) {
                 total = 0
             }
 
-            console.log(total,num);
             // remove the last letter from the word
             word = word.slice(0, -1);
             }
@@ -266,8 +263,3 @@ document.getElementById("overlay").onclick = function() {
 
 }
 
-// when button with id "clear" is clicked clear cookies
-document.getElementById("clear").onclick = function() {
-    document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
-    console.log(document.cookie)
-}
