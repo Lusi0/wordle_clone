@@ -32,7 +32,10 @@ function clearBoxes() {
 
 clearBoxes();
 
-
+// check if user is on mobile
+if (window.innerWidth < 600) {
+    prompt();
+}
 
 num = 0;
 total = 0;
