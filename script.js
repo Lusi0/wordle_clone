@@ -1,4 +1,6 @@
 
+
+
 function getTodaysWord() {
     //get the day month and year and put them into a string formatted as YYYY-MM-DD
     var today = new Date();
@@ -33,9 +35,6 @@ function clearBoxes() {
 clearBoxes();
 
 // check if user is on mobile
-if (window.innerWidth < 600) {
-    prompt();
-}
 
 num = 0;
 total = 0;
@@ -313,3 +312,8 @@ document.getElementById("overlay").onclick = function() {
 
 }
 
+// check if the user is on mobile
+if (window.innerWidth < 600) {
+    navigator.virtualKeyboard.show();
+    console.log("mobile");
+}
