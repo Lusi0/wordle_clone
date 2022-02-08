@@ -93,6 +93,10 @@ for (i = 0; i < saved.length; i++) {
                 word = "";
                 row++;
 }
+if (saved[saved.length - 1].length == myrandomword.length) {
+    winner = true;
+    on();
+}
 if (row >6){
     loser = true;
     on();
@@ -177,6 +181,7 @@ document.addEventListener("keypress", function(event) {
                 }
                 
             }
+
 
             if (row > 6){
                 loser = true;
