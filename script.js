@@ -15,7 +15,12 @@ function getTodaysWord() {
     return words[today % words.length];
 }
 
-const myrandomword = getTodaysWord();
+function getRandomWord() {
+    // get a random word from the array
+    return words[Math.floor(Math.random() * words.length)];
+}
+
+let myrandomword = getTodaysWord();
 
 
 
@@ -183,7 +188,7 @@ document.addEventListener("keypress", function(event) {
             }
 
 
-            if (row > 6){
+            if (row >= 6){
                 loser = true;
                 on();
             }
@@ -195,7 +200,7 @@ document.addEventListener("keypress", function(event) {
 
 document.addEventListener("keydown", function(event) {
         // if the key pressed is backspace clear the box that corresponds to num and decrement num
-    if (winner != true) {
+    if (winner != true && loser != true) {
         if (event.key == ("Backspace")) {
             // if total-1 is divisible by 5
             if (total % 5 != 0 || num != 0) {
@@ -238,7 +243,7 @@ document.getElementById("borble").onclick = function() {
 }
 
 document.getElementById("button").onclick = function() {
-    if (winner == true) {
+    if (winner == true && loser != true) {
         // date string formatted as DD-MM-YYYY
         var today = new Date();
         var dd = today.getDate();
@@ -317,8 +322,38 @@ document.getElementById("overlay").onclick = function() {
 
 }
 
-// check if the user is on mobile
-if (window.innerWidth < 600) {
-    navigator.virtualKeyboard.show();
-    console.log("mobile");
+
+
+
+// reset the game
+document.getElementById("reset").onclick = function() {
+    if (winner == true) {
+        // hide the overlay
+        document.getElementById("overlay").style.display = "none";
+        // clear the boxes
+        for (i = 0; i < boxes.length; i++) {
+            selected = boxes[i].querySelector(".box_content");
+            boxes[i].classList.remove("tried");
+            boxes[i].classList.remove("goodtried");
+            boxes[i].classList.remove("correct");
+            selected.innerHTML = "";
+        }
+        myrandomword = getRandomWord();
+
+        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        // reset the num
+        num = 0;
+        // reset the word
+        word = "";
+        // reset the row
+        row = 1;
+        // reset the total
+        total = 0;
+        // reset the answers
+        answers = [];
+        // reset the winner
+        winner = false;
+        // reset the loser
+        loser = false;
+    }
 }

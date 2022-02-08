@@ -99,18 +99,28 @@ body {
     z-index: 2;
     cursor: pointer;
   }
-  
-  #button{
+
+  .container{
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 30rem;
+  }
+  
+  .button{
     font-size: 50px;
     color: white;
     transform: translate(-50%,-50%);
     -ms-transform: translate(-50%,-50%);
     background-color: #6AAA64;
     padding: 1%;
+    margin-top: 30px;
     z-index: 3;
     font-weight: 550;
     text-transform: uppercase;
   }
+  
+  .button:hover{
+    background-color: #C9B458;
+  }
+
