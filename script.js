@@ -49,6 +49,7 @@ row = 1;
 word = "";
 winner = false;
 loser = false;
+practice_mode = false;
 
 letters = "abcdefghijklmnopqrstuvwxyz";
 
@@ -272,6 +273,7 @@ document.addEventListener("keydown", function(event) {
 
 function on() {
     document.getElementById("overlay").style.display = "block";
+    practice_mode = true;
 }
 
 function on2() {
@@ -392,7 +394,7 @@ document.getElementById("reset").onclick = function() {
         }
         myrandomword = getRandomWord();
         
-        document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+        //document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
 
         // reset the num
         num = 0;
@@ -408,6 +410,8 @@ document.getElementById("reset").onclick = function() {
         winner = false;
         // reset the loser
         loser = false;
+        
+        practice_mode = true;
     }
 }
 
