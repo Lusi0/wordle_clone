@@ -26,6 +26,8 @@ let myrandomword = getTodaysWord();
 
 const boxes = document.querySelectorAll(".box");
 
+const boxes_special = document.querySelectorAll(".box_special");
+
 // clear the text in all of the boxes
 function clearBoxes() {
     // loop through all of the boxes
@@ -33,7 +35,7 @@ function clearBoxes() {
         // select the div with a class of box_content 
         selected = box.querySelector(".box_content")
         // select the header in the div
-        selected.innerHTML = "";
+        
     });
 }
 
@@ -47,6 +49,39 @@ row = 1;
 word = "";
 winner = false;
 loser = false;
+
+letters = "abcdefghijklmnopqrstuvwxyz";
+
+letter_wrong = [];
+letter_right = [];
+letter_wrong_index = [];
+
+// for box in boxes_special
+update_helper = function() {
+    for (j = 0; j < letters.length; j++) {
+        // select the box that corresponds to the number
+        selected = boxes_special[j].querySelector(".box_content");
+        // put the letter in the box
+        
+        letter = letters[j];
+
+        selected.innerHTML = letter;
+        // increment the total
+
+        // if the letter is in letter wrong
+        if (letter_right.includes(letter)) {
+            selected.classList.add("correct");
+        } else if (letter_wrong_index.includes(letter)) {
+            selected.classList.add("goodtried");
+        } else if (letter_wrong.includes(letter)) {
+            selected.classList.add("tried");
+        } else {
+            selected.classList.add("unguessed");
+        }
+
+        
+    }
+}
 
 answers = [
 ];
@@ -77,7 +112,7 @@ for (i = 0; i < saved.length; i++) {
                         boxes[k].classList.add("correct");
                         // append "g" to tempanwers
                         tempanswers.push("c");
-
+                        letter_right.push(word[l]);
                         // remove one object that is equal to word[l] from tempword
 
                         tempword.splice(tempword.indexOf(word[l]), 1);
@@ -85,10 +120,12 @@ for (i = 0; i < saved.length; i++) {
                         boxes[k].classList.add("goodtried");
                         tempanswers.push("y");
                         tempword.splice(tempword.indexOf(word[l]), 1);
+                        letter_wrong_index.push(word[l]);
                     }
                     else {
                     tempanswers.push("w");
                     boxes[k].classList.add("tried");
+                    letter_wrong.push(word[l]);
                     }
                     l++
 
@@ -98,15 +135,18 @@ for (i = 0; i < saved.length; i++) {
                 word = "";
                 row++;
 }
-if (saved[saved.length - 1].length == myrandomword.length) {
+if (saved[saved.length - 1] == myrandomword) {
     winner = true;
     on();
+    console.log("winner");
 }
 if (row >6){
     loser = true;
     on();
 }
 }
+
+update_helper();
 
 // when key is pressed if it is a letter put it into the box that corresponds to num
 document.addEventListener("keypress", function(event) {
@@ -159,6 +199,8 @@ document.addEventListener("keypress", function(event) {
                         // append "g" to tempanwers
                         tempanswers.push("c");
 
+                        letter_right.push(word[j]);
+                        
                         // remove one object that is equal to word[j] from tempword
 
                         tempword.splice(tempword.indexOf(word[j]), 1);
@@ -166,10 +208,12 @@ document.addEventListener("keypress", function(event) {
                         boxes[i].classList.add("goodtried");
                         tempanswers.push("y");
                         tempword.splice(tempword.indexOf(word[j]), 1);
+                        letter_wrong_index.push(word[j]);
                     }
                     else {
                     tempanswers.push("w");
                     boxes[i].classList.add("tried");
+                    letter_wrong.push(word[j]);
                     }
                     j++
 
@@ -181,17 +225,14 @@ document.addEventListener("keypress", function(event) {
                 
                 // if the row is greater than the number of boxes, reset the row
                 
-                if (row > 6) {
-                    row = 6;
-                }
-                
             }
 
-
-            if (row >= 6){
+            update_helper();
+            if (row > 6){
                 loser = true;
                 on();
             }
+
         }
     }
 
@@ -233,12 +274,15 @@ function on() {
     document.getElementById("overlay").style.display = "block";
 }
 
+function on2() {
+    document.getElementById("overlay2").style.display = "block";
+}
+
 document.getElementById("borble").onclick = function() {
-    if (winner == true) {
+    if (winner == true || loser == true) {
         on();
-    }
-    if (loser == true) {
-        on();
+    } else {
+        on2();
     }
 }
 
@@ -322,12 +366,20 @@ document.getElementById("overlay").onclick = function() {
 
 }
 
+document.getElementById("overlay2").onclick = function() {
+    
+    // hide the overlay
+    document.getElementById("overlay2").style.display = "none";
+    // clear the boxes
+
+}
+
 
 
 
 // reset the game
 document.getElementById("reset").onclick = function() {
-    if (winner == true) {
+    if (winner == true || loser == true) {
         // hide the overlay
         document.getElementById("overlay").style.display = "none";
         // clear the boxes
@@ -339,8 +391,9 @@ document.getElementById("reset").onclick = function() {
             selected.innerHTML = "";
         }
         myrandomword = getRandomWord();
-
+        
         document.cookie.split(";").forEach(function(c) { document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/"); });
+
         // reset the num
         num = 0;
         // reset the word
@@ -357,3 +410,5 @@ document.getElementById("reset").onclick = function() {
         loser = false;
     }
 }
+
+

@@ -8,6 +8,17 @@
 
 }
 
+.box_special {
+  border: 1px solid #ccc;
+  display: inline-block;
+  position: relative;
+  width: 5%;
+  height: 0;
+  padding-bottom: 5%;
+
+}
+
+
 .box_content {
     position: absolute;
     top: 0;
@@ -36,6 +47,8 @@
     transition: opacity 0.5s;
 }
 
+
+
 /* make content in body centered */
 body {
     font-family: sans-serif;
@@ -46,21 +59,27 @@ body {
 }
 
 .tried {
-    border-color: rgba(204, 204, 204, 0);
-    background-color: #787C7E;
-    color: #fff;
+    border-color: rgba(204, 204, 204, 0) !important;
+    background-color: #787C7E !important;
+    color: #fff !important;
 }
 
 .correct {
-    border-color: rgba(204, 204, 204, 0);
-    background-color: #6AAA64;
-    color: #fff;
+    border-color: rgba(204, 204, 204, 0) !important;
+    background-color: #6AAA64 !important;
+    color: #fff !important;
+}
+
+.unguessed {
+  border-color: rgba(204, 204, 204, 0);
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
 }
 
 .goodtried {
-    border-color: rgba(204, 204, 204, 0);
-    background-color: #C9B458;
-    color: rgb(255, 255, 255);
+    border-color: rgba(204, 204, 204, 0) !important;
+    background-color: #C9B458 !important;
+    color: rgb(255, 255, 255) !important;
 }
 
 .title {
@@ -100,12 +119,31 @@ body {
     cursor: pointer;
   }
 
+  #overlay2 {
+    position: fixed;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 2;
+    cursor: pointer;
+  }
+
   .container{
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 30rem;
   }
+
+  .container2{
+    position: absolute;
+    width: 100%;
+  }
+  
   
   .button{
     font-size: 50px;
@@ -124,3 +162,7 @@ body {
     background-color: #C9B458;
   }
 
+
+
+
+  
