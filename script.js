@@ -106,31 +106,63 @@ for (i = 0; i < saved.length; i++) {
     }
     l = 0;
                 tempword = myrandomword.split("");
-                tempanswers = [];
+                tempanswers = ["w","w","w","w","w"];
+                // for (k = total - num; k < total; k++) {
+                //     // check to see if the current box matches any letters in the word
+                //     if (word[l] == myrandomword[l]) {
+                //         boxes[k].classList.add("correct");
+                //         // append "g" to tempanwers
+                //         tempanswers.push("c");
+                //         letter_right.push(word[l]);
+                //         // remove one object that is equal to word[l] from tempword
+
+                //         tempword.splice(tempword.indexOf(word[l]), 1);
+                //     } else if (myrandomword.split("").includes(word[l]) && tempword.includes(word[l])) {
+                //         boxes[k].classList.add("goodtried");
+                //         tempanswers.push("y");
+                //         tempword.splice(tempword.indexOf(word[l]), 1);
+                //         letter_wrong_index.push(word[l]);
+                //     }
+                //     else {
+                //     tempanswers.push("w");
+                //     boxes[k].classList.add("tried");
+                //     letter_wrong.push(word[l]);
+                //     }
+                //     l++
+
+                // }
+
+                l = 0;
                 for (k = total - num; k < total; k++) {
-                    // check to see if the current box matches any letters in the word
                     if (word[l] == myrandomword[l]) {
                         boxes[k].classList.add("correct");
                         // append "g" to tempanwers
-                        tempanswers.push("c");
+                        tempanswers[l] = "c";
+
                         letter_right.push(word[l]);
-                        // remove one object that is equal to word[l] from tempword
+                        
+                        // remove one object that is equal to word[j] from tempword
 
                         tempword.splice(tempword.indexOf(word[l]), 1);
-                    } else if (myrandomword.split("").includes(word[l]) && tempword.includes(word[l])) {
+                    }
+
+                    l++
+                }
+                l = 0;
+                for (k = total - num; k < total; k++) {
+                    if (myrandomword.split("").includes(word[l]) && tempword.includes(word[l])) {
                         boxes[k].classList.add("goodtried");
-                        tempanswers.push("y");
+                        tempanswers[l] = "y";
                         tempword.splice(tempword.indexOf(word[l]), 1);
                         letter_wrong_index.push(word[l]);
                     }
                     else {
-                    tempanswers.push("w");
                     boxes[k].classList.add("tried");
                     letter_wrong.push(word[l]);
                     }
                     l++
-
                 }
+                
                 answers.push(tempanswers);
                 num = 0;
                 word = "";
@@ -187,38 +219,79 @@ document.addEventListener("keypress", function(event) {
                 // set the time to 12:00am
                 day.setHours(0,0,0,0);
                 my_cookie = "row" + row + "=" + word + "; expires="+ day;
+                if (practice_mode == false) {
                 document.cookie = my_cookie;
-
+                }
 
                 j = 0;
                 tempword = myrandomword.split("");
-                tempanswers = [];
+                tempanswers = ["w","w","w","w","w"];
+
+                
+
+                
+
+                
+                // for (i = total - num; i < total; i++) {
+                //     // check to see if the current box matches any letters in the word
+                //     if (word[j] == myrandomword[j]) {
+                //         boxes[i].classList.add("correct");
+                //         // append "g" to tempanwers
+                //         tempanswers.push("c");
+
+                //         letter_right.push(word[j]);
+                        
+                //         // remove one object that is equal to word[j] from tempword
+
+                //         tempword.splice(tempword.indexOf(word[j]), 1);
+                //     } else if (myrandomword.split("").includes(word[j]) && tempword.includes(word[j])) {
+                //         boxes[i].classList.add("goodtried");
+                //         tempanswers.push("y");
+                //         tempword.splice(tempword.indexOf(word[j]), 1);
+                //         letter_wrong_index.push(word[j]);
+                //     }
+                //     else {
+                //     tempanswers.push("w");
+                //     boxes[i].classList.add("tried");
+                //     letter_wrong.push(word[j]);
+                //     }
+                //     j++
+
+                // }
+
+                j = 0;
                 for (i = total - num; i < total; i++) {
-                    // check to see if the current box matches any letters in the word
                     if (word[j] == myrandomword[j]) {
                         boxes[i].classList.add("correct");
                         // append "g" to tempanwers
-                        tempanswers.push("c");
+                        tempanswers[j] = "c";
 
                         letter_right.push(word[j]);
                         
                         // remove one object that is equal to word[j] from tempword
 
                         tempword.splice(tempword.indexOf(word[j]), 1);
-                    } else if (myrandomword.split("").includes(word[j]) && tempword.includes(word[j])) {
+                    }
+
+                    j++
+                }
+                j = 0;
+                for (i = total - num; i < total; i++) {
+                    if (myrandomword.split("").includes(word[j]) && tempword.includes(word[j])) {
                         boxes[i].classList.add("goodtried");
-                        tempanswers.push("y");
+                        tempanswers[j] = "y";
                         tempword.splice(tempword.indexOf(word[j]), 1);
                         letter_wrong_index.push(word[j]);
                     }
                     else {
-                    tempanswers.push("w");
+                    tempanswers[j] ="w";
                     boxes[i].classList.add("tried");
                     letter_wrong.push(word[j]);
                     }
                     j++
-
                 }
+
+                
                 answers.push(tempanswers);
                 num = 0;
                 word = "";
@@ -273,7 +346,6 @@ document.addEventListener("keydown", function(event) {
 
 function on() {
     document.getElementById("overlay").style.display = "block";
-    practice_mode = true;
 }
 
 function on2() {
