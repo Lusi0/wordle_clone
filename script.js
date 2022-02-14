@@ -285,7 +285,6 @@ document.addEventListener("keypress", function(event) {
                     }
                     else {
                     tempanswers[j] ="w";
-                    boxes[i].classList.add("tried");
                     letter_wrong.push(word[j]);
                     }
                     j++
