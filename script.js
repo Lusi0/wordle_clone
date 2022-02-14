@@ -283,8 +283,8 @@ document.addEventListener("keypress", function(event) {
                         tempword.splice(tempword.indexOf(word[j]), 1);
                         letter_wrong_index.push(word[j]);
                     }
-                    else {
-                    tempanswers[j] ="w";
+                    else {  
+                    boxes[i].classList.add("tried");
                     letter_wrong.push(word[j]);
                     }
                     j++
